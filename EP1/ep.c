@@ -51,7 +51,6 @@ int ehSolucao (struct grafo *G) { // devido à maneira de construção da soluç
 
 int ehAceitavel (struct grafo *G, int arestaATestar, int verticeAtual) {
 	if (arestaUsada[arestaATestar]) return 0;   // aresta a testar está em uso. Não é aceitável
-  if (grauDoVertice[verticeAtual] == 2) return 0; // verifica se o vertice de partida ja esta cheio
 	if (G->A[3*arestaATestar] == verticeAtual) { // arestaATestar conecta no vértice atual
 		if (grauDoVertice[G->A[3*arestaATestar+1]] < 2) { // vértice no outro extremo da aresta não é coberto.
 			return 1; // é aceitável
@@ -76,34 +75,31 @@ int aumentaCaminho (struct grafo *G, int arestaAcrescentar, int verticeAtual) { 
 	return G->A[3*arestaAcrescentar];
 }
 
-void removeJogada(struct grafo *G, int arestaRemover, int verticeAtual) {
+int removeJogada(struct grafo *G, int arestaRemover, int verticeAtual) {
   arestaUsada[arestaRemover] = 0;
   grauDoVertice[G->A[3*arestaRemover+1]]--;
   grauDoVertice[G->A[3*arestaRemover]]--;
-  return;
+  if (G->A[3*arestaRemover] == verticeAtual) {
+    return G->A[3*arestaRemover+1];
+  }
+  return G->A[3*arestaRemover];
 }
 
 int backtracking(struct grafo *G, int verticeAtual) {
 
   int iAresta = 0;
-  int resolvido = ehSolucao(G);
-  int verticeAntigo;
+  if(ehSolucao(G)) return 1;
 
   do {
-
     if(ehAceitavel(G, iAresta, verticeAtual)){
-
       verticeAtual = aumentaCaminho(G, iAresta, verticeAtual);
-      if(!ehSolucao(G)) {
-        resolvido = backtracking(G, verticeAtual);
-
-        if(!resolvido){
-          removeJogada(G, iAresta, verticeAtual);
-        };
+      if(!ehSolucao(G)){
+        if(backtracking(G, verticeAtual)) return 1;
+        verticeAtual = removeJogada(G, iAresta, verticeAtual);
       }
     }
     iAresta++;
-  } while(iAresta < G->M && !resolvido);
+  } while((iAresta < G->M) && !ehSolucao(G));
 
   if (ehSolucao(G)) {
     return 1;
