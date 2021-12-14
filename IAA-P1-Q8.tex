@@ -1,0 +1,33 @@
+\\T_{multA} = 2*T(n/2) + c \\
+\text{Logo}, a = 2, b = 2, f(n) = \Theta(1) \\
+=> f(n) = O(n^{(\log_{2} 2) - 1}) = O(n^{0}) = O(1) \\
+\text{Portanto, pelo teorema mestre}, T(n) = \Theta(n^{\log_{2}2}) = \Theta(n) \\
+\newline
+T_{multB} = T(n/2) + c \\
+\text{Logo}, a = 1, b = 2, f(n) = \Theta(1) \\
+=> f(n) = \Theta(n^{\log_{2} 1}) = \Theta(n^{0}) = \Theta(1) \\
+\text{Portanto, pelo teorema mestre}, T(n) = \Theta(n^{\log_{2}1} * \log{n}) = \Theta(\log{n})\\
+\newline
+T_{multC} = T(n-1)+c\\
+\text{Passo base:} T(1) = c\\
+T(2) = T(1) + c\\
+T(2) = 2*c\\
+T(n) = T(n-1) + c\\
+T(n) = c*(n-1) + c\\
+T(n) = c*n\\
+\text{Portanto}, T(n) = \Theta(n)\\
+\newline
+\text{A funcao multB tem o menor tempo de execucao}\\
+\text{Prova:}\\
+T_{multB} = \Theta(\log{n})\\
+=> T_{multB} = o(n)\\
+\newline
+\text{Ao mesmo tempo que:}\\
+T_{multA} = \Theta{n} = T_{multC}
+=> T_{multA} = O(n) = T_{multC}
+\newline
+\text{Como sabemos que se}\\
+f(n) = o(g(n)) \wedge h(n) = O(g(n))\\
+=> f(n) < h(n)\\
+\text{provamos que}\\
+T_{multB} < T_{multA} = T_{multC}

@@ -1,0 +1,10 @@
+\\T(n) = 3*T(n/3) + n^{2}\\
+\newline
+\text{Portanto, pelo teorema mestre:}\\
+a = 3, b = 3, f(n)=\Omega(n^{2})\\
+=> f(n) = \Omega(n^{(\log_{3}3)+\epsilon}) = \Omega(n^{(\log_{3}3)+1})\\
+\newline
+\text{Entao}, T(n) = \Theta(f(n)) = \Theta(n^{2})\\
+\newline
+\text{A escolha do epsilon aconteceu pelo fato de que }n^{\log_{3}3}=n^{1}\\
+\text{e } f(n) = n^{2}
